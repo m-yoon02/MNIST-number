@@ -1,4 +1,4 @@
-# MNIST 숫자 이미지 분류기 (PyTorch 버전)
+# MNIST number differentiation ( MNIST 숫자 이미지 분류) 
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -6,14 +6,14 @@ import torchvision
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 
-# GPU 사용 가능하면 사용
+# Use GPU if could GPU 사용 가능하면 사용
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print("사용 중인 디바이스:", device)
+print("Device currently on use 사용 중인 디바이스:", device)
 
-# 데이터셋 로드 및 전처리
+# filter dataset 데이터셋 로드 및 전처리
 transform = transforms.Compose([
-    transforms.ToTensor(),                # 이미지를 Tensor로 변환
-    transforms.Normalize((0.5,), (0.5,))  # 정규화
+    transforms.ToTensor(),                # change image into tensor 이미지를 Tensor로 변환
+    transforms.Normalize((0.5,), (0.5,))  # regularization 정규화
 ])
 
 trainset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
@@ -22,7 +22,7 @@ trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
 testset = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
 testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=False)
 
-# CNN 모델 정의
+# Define CNN model CNN 모델 정의
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -47,7 +47,7 @@ class Net(nn.Module):
 
 model = Net().to(device)
 
-# 손실 함수와 옵티마이저
+# Optimzer and loss 손실 함수와 옵티마이저
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
@@ -68,7 +68,7 @@ for epoch in range(epochs):
 
     print(f"[{epoch+1}/{epochs}] Loss: {running_loss / len(trainloader):.4f}")
 
-# 테스트 정확도 평가
+# Correctness testing 테스트 정확도 평가
 correct = 0
 total = 0
 with torch.no_grad():
